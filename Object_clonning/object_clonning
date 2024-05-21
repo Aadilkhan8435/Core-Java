@@ -29,6 +29,7 @@ Shallow vs Deep copy
 Shallow Copy	                                                              Deep Copy
 It is fast as no new memory is allocated.	                                It is slow as new memory is allocated.
 Changes in one entity is reflected in other entity.	                      Changes in one entity are not reflected in changes in another identity.
+Changes will not get reflected in primitive data types.	                   Changes will not get reflected in primitive data types
 The default version of the clone() method supports shallow copy.	         In order to make the clone() method support the deep copy, one has to override the clone() method.
 A shallow copy is less expensive.	                                        Deep copy is highly expensive.
 Cloned object and the original object are not disjoint.                   Cloned object and the original object are disjoint 
