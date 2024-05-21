@@ -22,3 +22,13 @@ defining the clone() method and handling CloneNotSupportedException, and finally
 3.If you want to write a clone method in a child class then all of its superclasses should define the clone() method in them or inherit it from another parent class. 
 Otherwise, the super.clone() chain will fail.
 4. Object.clone() supports only shallow copying but we will need to override it if we need deep cloning.
+
+
+Shallow vs Deep copy
+
+Shallow Copy	                                                              Deep Copy
+It is fast as no new memory is allocated.	                                It is slow as new memory is allocated.
+Changes in one entity is reflected in other entity.	                      Changes in one entity are not reflected in changes in another identity.
+The default version of the clone() method supports shallow copy.	         In order to make the clone() method support the deep copy, one has to override the clone() method.
+A shallow copy is less expensive.	                                        Deep copy is highly expensive.
+Cloned object and the original object are not disjoint.                   Cloned object and the original object are disjoint 
