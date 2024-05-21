@@ -17,3 +17,47 @@ It can be used to achieve loose coupling.
 Class --EXTENDS-- Class
 Class --IMPLEMENT-- Interface
 Interface --EXTENDS-- Interface
+
+Multiple inheritance is not supported through class in java, but it is possible by an interface, why?
+interface Printable{  
+void print();  
+}  
+interface Showable{  
+void print();  
+}  
+  
+class TestInterface3 implements Printable, Showable{  
+public void print(){System.out.println("Hello");}  
+public static void main(String args[]){  
+TestInterface3 obj = new TestInterface3();  
+obj.print();  
+ }  
+}  
+
+Output -- Hellow
+
+***************************************** 
+
+Marker interface -> 
+
+What is marker or tagged interface?
+An interface which has no member is known as a marker or tagged interface, for example, Serializable, Cloneable, Remote, etc. 
+They are used to provide some essential information to the JVM so that JVM may perform some useful operation.
+
+Functional Interface --> 
+
+An Interface that contains exactly one abstract method is known as functional interface. 
+It can have any number of default, static methods but can contain only one abstract method. It can also declare methods of object class.
+
+Functional Interface is also known as Single Abstract Method Interfaces or SAM Interfaces. It is a new feature in Java, which helps to achieve functional programming approach.
+
+@FunctionalInterface Annotation
+@FunctionalInterface annotation is used to ensure that the functional interface can’t have more than one abstract method. In case more than one abstract methods are present, 
+the compiler flags an ‘Unexpected @FunctionalInterface annotation’ message. However, it is not mandatory to use this annotation.
+
+pre-defined -
+Consumer<T>	It represents an operation that accepts a single argument and returns no result.
+Function<T,R>	It represents a function that accepts one argument and returns a result.
+Predicate<T>	It represents a predicate (boolean-valued function) of one argument.
+
+
