@@ -1,1 +1,10 @@
+Access modifiers -> The access modifiers in Java specifies the accessibility or scope of a field, method, constructor, or class. 
+                    We can change the access level of fields, constructors, methods, and class by applying the access modifier on it.
 
+Let's understand the access modifiers in Java by a simple table.
+
+Access Modifier	     within class	    within package	  outside package by subclass only	  outside package
+Private                  	Y	                N	                          N	                         N
+Default	                  Y	                Y	                          N	                         N
+Protected               	Y                	Y                          	Y                        	 N
+Public	                  Y	                Y	                          Y                          Y
