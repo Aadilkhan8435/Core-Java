@@ -36,3 +36,36 @@ Identity: It is a unique name given to an object that enables it to interact wit
 Method: A method is a collection of statements that perform some specific task and return the result to the caller. 
         A method can perform some specific task without returning anything. Methods allow us to reuse the code without retyping it, 
         which is why they are considered time savers. In Java, every method must be part of some class, which is different from languages like C, C++, and Python.
+
+Abstraction -
+        Hiding Internal details and showing only functionalities to the users.
+        In Java, abstraction is achieved by interfaces and abstract classes. We can achieve 100% abstraction using interfaces. 
+        The abstract method contains only method declaration but not implementation.
+
+Example -
+        //abstract class 
+abstract class GFG{ 
+//abstract methods declaration 
+abstract void add(); 
+abstract void mul(); 
+abstract void div(); 
+} 
+
+ Encapsulation - It is defined as the wrapping up of data under a single unit object.
+                 It is the mechanism that binds together the code and the data it manipulates.
+                 it is a protective shield that prevents the data from being accessed by the code outside this shield.
+
+The variables or the data in a class is hidden from any other class and can be accessed only through any member function of the class in which they are declared.
+In encapsulation, the data in a class is hidden from other classes, which is similar to what data-hiding does. So, the terms “encapsulation” and “data-hiding” are used interchangeably.
+Encapsulation can be achieved by declaring all the variables in a class as private and writing public methods in the class to set and get the values of the variables.
+
+Inheritance - 
+
+It is the mechanism in Java by which one class is allowed to inherit the features (fields and methods) of another class.
+We are achieving inheritance by using extends keyword. Inheritance is also known as “is-a” relationship.
+Reusability
+
+
+Polymorphism -
+Many behaviours
+
