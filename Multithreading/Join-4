@@ -1,0 +1,19 @@
+Join 
+
+The join() method in Java is provided by the java.lang.Thread class that permits one thread to wait until the other thread to finish its execution
+
+Suppose th be the object the class Thread whose thread is doing its execution currently, 
+then the th.join(); statement ensures that th is finished before the program does the execution of the next statement.
+
+join(): When the join() method is invoked, the current thread stops its execution and the thread goes into the wait state. 
+The current thread remains in the wait state until the thread on which the join() method is invoked has achieved its dead state. 
+If interruption of the thread occurs, then it throws the InterruptedException.
+
+Syntax:
+public final void join() throws InterruptedException  
+
+join(long mls): When the join() method is invoked, the current thread stops its execution and the thread goes into the wait state. 
+The current thread remains in the wait state until the thread on which the join() method is invoked called is dead or the wait for the specified time frame(in milliseconds) is over.
+
+public final synchronized void join(long mls) throws InterruptedException, where mls is in milliseconds 
+
