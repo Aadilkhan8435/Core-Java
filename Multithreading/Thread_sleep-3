@@ -1,1 +1,13 @@
 Thread.sleep method -
+
+Whenever the Thread.sleep() methods execute, it always halts the execution of the current thread.
+
+Whenever another thread does interruption while the current thread is already in the sleep mode, then the InterruptedException is thrown.
+
+public static void sleep(long mls) throws InterruptedException   --> native method
+public static void sleep(long mls, int n) throws InterruptedException   --> non native method
+
+he native, as well as the non-native method, throw a checked Exception. Therefore, either try-catch block or the throws keyword can work here.
+
+ sleep() Method in Java: When the sleeping time is -ive
+java.lang.IllegalArgumentException: timeout value is negative
