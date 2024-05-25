@@ -16,3 +16,19 @@ Preemptive-Priority Scheduling:
 Suppose there are multiple threads available in the runnable state. The thread scheduler picks that thread that has the highest priority. 
 Since the algorithm is also preemptive, therefore, time slices are also provided to the threads to avoid starvation. 
 Thus, after some time, even if the highest priority thread has not completed its job, it has to release the CPU because of preemption.
+
+*********************
+
+Priority of a Thread (Thread Priority)
+Each thread has a priority. Priorities are represented by a number between 1 and 10. 
+
+public final int getPriority(): The java.lang.Thread.getPriority() method returns the priority of the given thread.
+
+public final void setPriority(int newPriority): The java.lang.Thread.setPriority() method updates or assign the priority of the thread to newPriority.
+
+3 constants defined in Thread class:
+public static int MIN_PRIORITY
+public static int NORM_PRIORITY
+public static int MAX_PRIORITY
+Default priority of a thread is 5 (NORM_PRIORITY). The value of MIN_PRIORITY is 1 and the value of MAX_PRIORITY is 10.
+
