@@ -1,0 +1,42 @@
+Shutdown Hook -
+
+Allows developers to add some code that has to be run when the Java Virtual Machine (JVM) is shutting down is known as the Java shutdown hook.
+The Java shutdown hook comes in very handy in the cases where one needs to perform some special cleanup work when the JVM is shutting down.
+Performing clean resources means closing log files, sending some alerts, or something else. So if you want to execute some code before JVM shuts down, use the shutdown hook.
+
+The JVM shuts down when:
+
+user presses ctrl+c on the command prompt
+System.exit(int) method is invoked
+user logoff
+user shutdown etc.
+
+The addShutdownHook(Thread hook) method - The addShutdownHook() method of the Runtime class is used to register the thread with the Virtual Machine.
+
+Syntax:public void addShutdownHook(Thread hook){}  
+
+The removeShutdownHook(Thread hook) method - The removeShutdownHook() method of the Runtime class is invoked to remove the registration of the already registered shutdown hooks.
+
+Syntax: public boolean removeShutdownHook(Thread hook){ }    
+
+Example 
+class MyThread extends Thread{    
+    public void run(){    
+        System.out.println("shut down hook task completed..");    
+    }    
+}    
+    
+public class TestShutdown1{    
+public static void main(String[] args)throws Exception {    
+    
+Runtime r=Runtime.getRuntime();    
+r.addShutdownHook(new MyThread());    
+        
+System.out.println("Now main sleeping... press ctrl+c to exit");    
+try{Thread.sleep(3000);}catch (Exception e) {}    
+}    
+}
+
+
+**** In some scenarios, the shutdown hooks will not execute at all. For example, if the JVM gets crashed due to some internal error, then there is no scope for the shutdown hooks.
+ Whenever a shutdown hooks start to execute, one can forcefully terminate it by shutting down the system. 
