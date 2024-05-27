@@ -1,0 +1,103 @@
+Exception Handling - 
+
+The Exception Handling in Java is one of the powerful mechanism to handle the runtime errors so that the normal flow of the application can be maintained.
+
+What is Exception in Java?
+Dictionary Meaning: Exception is an abnormal condition.
+
+In Java, an exception is an event that disrupts the normal flow of the program. It is an object which is thrown at runtime.
+
+What is Exception Handling?
+Exception Handling is a mechanism to handle runtime errors such as ClassNotFoundException, IOException, SQLException, RemoteException, etc.
+
+Suppose there are 10 statements in a Java program and an exception occurs at statement 5; the rest of the code will not be executed, i.e., 
+statements 6 to 10 will not be executed. However, when we perform exception handling, the rest of the statements will be executed.
+
+***************************
+Exception Hierarchy -
+
+Throwable
+  - Exception
+    - IOException
+    - SQLException
+    - ClassNotFoundException
+    - RunTimeException
+      - Aitrhmatic, numberformat, nullpointer, index out of bound
+  - Error 
+    - Out of memory, stack overflow , virtual machine
+
+**************************
+
+There are mainly two types of exceptions: checked and unchecked. An error is considered as the unchecked exception. 
+However, according to Oracle, there are three types of exceptions namely:
+
+Checked Exception
+Unchecked Exception
+Error
+
+1) Checked Exception
+The classes that directly inherit the Throwable class except RuntimeException and Error are known as checked exceptions.
+For example, IOException, SQLException, etc. Checked exceptions are checked at compile-time.
+
+2) Unchecked Exception
+The classes that inherit the RuntimeException are known as unchecked exceptions. For example, ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException, etc.
+Unchecked exceptions are not checked at compile-time, but they are checked at runtime.
+
+3) Error
+Error is irrecoverable. Some example of errors are OutOfMemoryError, VirtualMachineError, AssertionError etc.
+
+*************************
+
+try{    
+//code that may throw an exception    
+}catch(Exception_class_Name ref){}   
+
+try{    
+//code that may throw an exception    
+}finally{}  
+
+The JVM firstly checks whether the exception is handled or not. If exception is not handled, JVM provides a default exception handler that performs the following tasks:
+
+Prints out exception description.
+Prints the stack trace (Hierarchy of methods where the exception occurred).
+Causes the program to terminate.
+But if the application programmer handles the exception, the normal flow of the application is maintained, i.e., rest of the code is executed.
+
+***************************
+
+Java Exception Propagation
+
+An exception is first thrown from the top of the stack and if it is not caught, it drops down the call stack to the previous method.
+If not caught there, the exception again drops down to the previous method, and so on until they are caught or until they reach the very bottom of the call stack. 
+This is called exception propagation.
+
+Note: By default Unchecked Exceptions are forwarded in calling chain (propagated).
+Note: By default, Checked Exceptions are not forwarded in calling chain (propagated).
+
+*************************
+
+Java throws keyword
+The Java throws keyword is used to declare an exception. 
+
+It gives an information to the programmer that there may occur an exception. So, it is better for the programmer to provide the 
+exception handling code so that the normal flow of the program can be maintained.
+
+Exception Handling is mainly used to handle the checked exceptions. If there occurs any unchecked exception such as NullPointerException, 
+it is programmers' fault that he is not checking the code before it being used.
+
+
+Which exception should be declared?
+Ans: Checked exception only, because:
+
+Advantage of Java throws keyword
+Now Checked Exception can be propagated (forwarded in call stack).
+
+Rule: If we are calling a method that declares an exception, we must either caught or declare the exception.
+
+*************************
+
+Difference between throw and throws in Java
+
+https://www.javatpoint.com/difference-between-throw-and-throws-in-java
+
+************************
