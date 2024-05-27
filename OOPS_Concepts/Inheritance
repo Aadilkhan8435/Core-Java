@@ -1,0 +1,68 @@
+Inheritance  - 
+
+Why 
+
+For Method Overriding (so runtime polymorphism can be achieved).
+For Code Reusability.
+
+***********
+
+Is-A relationship
+
+Programmer is the subclass and Employee is the superclass. The relationship between the two classes is Programmer IS-A Employee. It means that Programmer is a type of Employee.
+
+Types of inheritance in java
+On the basis of class, there can be three types of inheritance in java: single, multilevel and hierarchical.
+
+In java programming, multiple and hybrid inheritance is supported through interface only. We will learn about interfaces later.
+
+single               multiple
+Class A              Class A 
+-                     -
+Class B              Class B
+                      -
+                     Class C
+
+Hierarchical
+            Class A 
+
+Class B               Class C
+
+
+
+Multiple 
+
+Class A           Class B
+         Class C
+
+
+Hybrid - diamond
+
+*******************
+
+Q) Why multiple inheritance is not supported in java?
+To reduce the complexity and simplify the language, multiple inheritance is not supported in java.
+
+Consider a scenario where A, B, and C are three classes. 
+The C class inherits A and B classes. If A and B classes have the same method and you call it from child class object, 
+there will be ambiguity to call the method of A or B class.
+
+Since compile-time errors are better than runtime errors, Java renders compile-time error if you inherit 2 classes. 
+So whether you have same method or different, there will be compile time error.
+********************
+
+HAS-A relationship
+
+If a class have an entity reference, it is known as Aggregation. Aggregation represents HAS-A relationship.
+class Employee{  
+int id;  
+String name;  
+Address address;//Address is a class  
+...  
+} 
+
+
+why ? 
+Code reuse is also best achieved by aggregation when there is no is-a relationship.
+Inheritance should be used only if the relationship is-a is maintained throughout the lifetime of the objects involved; otherwise, aggregation is the best choice.
+
