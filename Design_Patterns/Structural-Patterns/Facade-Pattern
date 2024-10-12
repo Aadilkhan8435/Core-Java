@@ -1,0 +1,85 @@
+Facade Pattern - provides a simplified interface to a complex system or a set of interfaces.
+                 It hides the complexity of the system and makes it easier for clients to interact with it by offering a single, unified interface.
+
+
+Example 
+
+@Data
+@AllArgsConstructor
+class Flight {
+    private String flightNumber;
+    private String destination;
+    private String departureTime;
+}
+
+
+class CheckIn {
+    public void checkInPassenger(String passengerName) {
+        System.out.println("Checking in passenger: " + passengerName);
+    }
+}
+
+
+class Boarding {
+    public void boardFlight(Flight flight, String passengerName) {
+        System.out.println("Boarding passenger " + passengerName + " on flight " +
+                flight.getFlightNumber() + " to " + flight.getDestination() +
+                " departing at " + flight.getDepartureTime());
+    }
+}
+
+class BaggageHandling {
+    public void handleBaggage(String passengerName) {
+        System.out.println("Handling baggage for: " + passengerName);
+    }
+}
+
+class AirportFacade {
+    private CheckIn checkIn;
+    private Boarding boarding;
+    private BaggageHandling baggageHandling;
+
+    public AirportFacade() {
+        checkIn = new CheckIn();
+        boarding = new Boarding();
+        baggageHandling = new BaggageHandling();
+    }
+
+    public void processFlight(String passengerName, Flight flight) {
+        System.out.println("Processing flight for passenger: " + passengerName);
+        checkIn.checkInPassenger(passengerName);
+        baggageHandling.handleBaggage(passengerName);
+        boarding.boardFlight(flight, passengerName);
+        System.out.println("Flight processing completed for: " + passengerName);
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        AirportFacade airportFacade = new AirportFacade();
+
+        Flight flight1 = new Flight("AA123", "New York", "10:30 AM");
+        airportFacade.processFlight("John Doe", flight1);
+
+        Flight flight2 = new Flight("BA456", "London", "2:00 PM");
+        airportFacade.processFlight("Jane Smith", flight2);
+    }
+}
+
+
+output 
+
+Processing flight for passenger: John Doe
+Checking in passenger: John Doe
+Handling baggage for: John Doe
+Boarding passenger John Doe on flight AA123 to New York departing at 10:30 AM
+Flight processing completed for: John Doe
+
+Processing flight for passenger: Jane Smith
+Checking in passenger: Jane Smith
+Handling baggage for: Jane Smith
+Boarding passenger Jane Smith on flight BA456 to London departing at 2:00 PM
+Flight processing completed for: Jane Smith
+
+
+
