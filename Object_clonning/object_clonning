@@ -84,16 +84,17 @@ public class ShallowCloneExample {
 
 
 Deep Cloning: Copies the object and all objects it references, resulting in completely independent objects.
-class Address {
+
+class Address implements Cloneable {
     String city;
 
     Address(String city) {
         this.city = city;
     }
 
-    // Deep clone method
-    public Address deepClone() {
-        return new Address(this.city);
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); // Using the built-in clone method
     }
 }
 
@@ -109,7 +110,7 @@ class Person implements Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         Person cloned = (Person) super.clone(); // Shallow clone
-        cloned.address = this.address.deepClone(); // Deep clone the Address
+        cloned.address = (Address) this.address.clone(); // Deep clone the Address
         return cloned;
     }
 }
@@ -133,3 +134,4 @@ public class DeepCloneExample {
         System.out.println(person2.address.city); // Output: Los Angeles
     }
 }
+
