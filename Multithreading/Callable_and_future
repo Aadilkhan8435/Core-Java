@@ -1,1 +1,67 @@
+The need for Callable
+
+There are two ways of creating threads – one by extending the Thread class and other by creating a thread with a Runnable. 
+However, one feature lacking in  Runnable is that we cannot make a thread return result when it terminates, i.e. when run() completes. 
+For supporting this feature, the Callable interface is present in Java.
+--------------------------------------
+Callable vs Runnable
+
+1.For implementing Runnable, the run() method needs to be implemented which does not return anything, while for a Callable, 
+the call() method needs to be implemented which returns a result on completion. Note that a thread can’t be created with a Callable, it can only be created with a Runnable.
+
+2.Another difference is that the call() method can throw an exception whereas run() cannot.
+--------------------------------------
+Callable example 
+
+class CallableExample implements Callable 
+{ 
+    @Override
+    public Object call() throws Exception 
+    {  
+        Random generator = new Random(); 
+        Integer randomNumber = generator.nextInt(5); 
+        Thread.sleep(randomNumber * 1000); 
+        return randomNumber; 
+    } 
+} 
+
+--------------------------
+
+Future
+
+When the call() method completes, answer must be stored in an object known to the main thread, 
+so that the main thread can know about the result that the thread returned. How will the program store and obtain this result later? For this, 
+a Future object can be used. Think of a Future as an object that holds the result – it may not hold it right now, but it will do so in the future (once the Callable returns).
+
+methods 
+public boolean cancel(boolean mayInterrupt):
+public Object get() throws InterruptedException, ExecutionException: 
+public boolean isDone(): 
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        // Create a Callable task
+        Callable<Integer> task = () -> {
+            Thread.sleep(2000); // Simulate a long-running task
+            return 42; // Return a result
+        };
+
+        // Submit the task and get a Future object
+        Future<Integer> future = executor.submit(task);
+
+        // Do some other operations while the task is running
+        System.out.println("Task submitted, doing other work...");
+
+        try {
+            // Retrieve the result of the computation
+            Integer result = future.get(); // This will block until the result is available
+            System.out.println("Result of the task: " + result);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } finally {
+            // Shutdown the executor
+            executor.shutdown();
+        }
+
+
 
