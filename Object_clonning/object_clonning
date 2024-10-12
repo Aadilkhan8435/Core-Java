@@ -34,3 +34,102 @@ object type reference will get copied                                      objec
 The default version of the clone() method supports shallow copy.	         In order to make the clone() method support the deep copy, one has to override the clone() method.
 A shallow copy is less expensive.	                                        Deep copy is highly expensive.
 Cloned object and the original object are not disjoint.                   Cloned object and the original object are disjoint 
+
+
+
+Shallow Cloning: Copies the object, but shared references to mutable objects lead to changes affecting both objects.
+
+class Address {
+    String city;
+
+    Address(String city) {
+        this.city = city;
+    }
+}
+
+class Person implements Cloneable {
+    String name;
+    Address address;
+
+    Person(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); // Shallow clone
+    }
+}
+
+public class ShallowCloneExample {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        Address address = new Address("New York");
+        Person person1 = new Person("Alice", address);
+
+        Person person2 = (Person) person1.clone(); // Cloning person1
+
+        System.out.println("Before modifying:");
+        System.out.println(person1.address.city); // Output: New York
+        System.out.println(person2.address.city); // Output: New York
+
+        // Modifying the address of person2
+        person2.address.city = "Los Angeles";
+
+        System.out.println("After modifying:");
+        System.out.println(person1.address.city); // Output: Los Angeles
+        System.out.println(person2.address.city); // Output: Los Angeles
+    }
+}
+
+
+Deep Cloning: Copies the object and all objects it references, resulting in completely independent objects.
+class Address {
+    String city;
+
+    Address(String city) {
+        this.city = city;
+    }
+
+    // Deep clone method
+    public Address deepClone() {
+        return new Address(this.city);
+    }
+}
+
+class Person implements Cloneable {
+    String name;
+    Address address;
+
+    Person(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Person cloned = (Person) super.clone(); // Shallow clone
+        cloned.address = this.address.deepClone(); // Deep clone the Address
+        return cloned;
+    }
+}
+
+public class DeepCloneExample {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        Address address = new Address("New York");
+        Person person1 = new Person("Alice", address);
+
+        Person person2 = (Person) person1.clone(); // Cloning person1
+
+        System.out.println("Before modifying:");
+        System.out.println(person1.address.city); // Output: New York
+        System.out.println(person2.address.city); // Output: New York
+
+        // Modifying the address of person2
+        person2.address.city = "Los Angeles";
+
+        System.out.println("After modifying:");
+        System.out.println(person1.address.city); // Output: New York
+        System.out.println(person2.address.city); // Output: Los Angeles
+    }
+}
