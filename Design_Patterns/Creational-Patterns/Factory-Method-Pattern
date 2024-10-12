@@ -12,79 +12,53 @@ When a class doesn't know what sub-classes will be required to create
 When a class wants that its sub-classes specify the objects to be created.
 
 Example ***********************
-Calculate Electricity Bill : A Real World Example of Factory Method
 
-Step 1: Create a Plan abstract class.
-      
-abstract class Plan{  
-         protected double rate;  
-         abstract void getRate();  
-   
-         public void calculateBill(int units){  
-              System.out.println(units*rate);  
-          }  
+Step 1: Define the Notification Interface
+
+interface Notification {
+    void notifyUser();
 }
 
-Step 2: Create the concrete classes that extends Plan abstract class.
+Step 2: Create Concrete Notification Classes
 
-class  DomesticPlan extends Plan{  
-        //@override  
-         public void getRate(){  
-             rate=3.50;              
-        }  
-   }
-
-class  CommercialPlan extends Plan{  
-   //@override   
-    public void getRate(){   
-        rate=7.50;  
-   }
-
-class  InstitutionalPlan extends Plan{  
-   //@override  
-    public void getRate(){   
-        rate=5.50;  
-   } 
-
-Step 3: Create a GetPlanFactory to generate object of concrete classes based on given information..
-
-class GetPlanFactory{  
-       public Plan getPlan(String planType){  
-            if(planType == null){  
-             return null;  
-            }  
-          if(planType.equalsIgnoreCase("DOMESTICPLAN")) {  
-                 return new DomesticPlan();  
-               }   
-           else if(planType.equalsIgnoreCase("COMMERCIALPLAN")){  
-                return new CommercialPlan();  
-            }   
-          else if(planType.equalsIgnoreCase("INSTITUTIONALPLAN")) {  
-                return new InstitutionalPlan();  
-          }  
-      return null;  
-   }  
-}
-
-
-Step 4: Generate Bill by using the GetPlanFactory to get the object of concrete classes by passing an information 
-such as type of plan DOMESTICPLAN or COMMERCIALPLAN or INSTITUTIONALPLAN.
-
-class GenerateBill{  
-    public static void main(String args[])throws IOException{  
-      GetPlanFactory planFactory = new GetPlanFactory();  
-      String planName=""; // DOMESTICPLAN or COMMERCIALPLAN or INSTITUTIONALPLAN   
-      System.out.print("Enter the number of units for bill will be calculated: ");  
-      int units=Integer.parseInt(br.readLine());  
-  
-      Plan p = planFactory.getPlan(planName);  
-      //call getRate() method and calculateBill()method of DomesticPaln.  
-  
-       System.out.print("Bill amount for "+planName+" of  "+units+" units is: ");  
-           p.getRate();  
-           p.calculateBill(units);  
-            }  
+class EmailNotification implements Notification {
+    @Override
+    public void notifyUser() {
+        System.out.println("Sending an Email Notification");
     }
+}
 
+class SMSNotification implements Notification {
+    @Override
+    public void notifyUser() {
+        System.out.println("Sending an SMS Notification");
+    }
+}
 
+3. Create the Notification Service Using
+
+class NotificationFactory {
+    public void sendNotification(String type) {
+        if (type.equalsIgnoreCase("email")) {
+            new EmailNotification().notifyUser();
+        } else if (type.equalsIgnoreCase("sms")) {
+            new SMSNotification().notifyUser();
+        } else if (type.equalsIgnoreCase("push")) {
+            new PushNotification().notifyUser();
+        } else {
+            System.out.println("Unknown notification type.");
+        }
+    }
+}
+
+4.
+public class Client {
+    public static void main(String[] args) {
+        NotificationFactory service = new NotificationFactory();
+        service.sendNotification("email");  // Outputs: Sending an Email Notification
+        service.sendNotification("sms");     // Outputs: Sending an SMS Notification
+        service.sendNotification("push");    // Outputs: Sending a Push Notification
+        service.sendNotification("unknown");  // Outputs: Unknown notification type.
+    }
+}
 
