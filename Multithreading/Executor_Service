@@ -1,0 +1,53 @@
+ExecutorService
+
+Thread Pool Management: It manages a pool of worker threads, which can execute tasks concurrently, thus improving resource utilization.
+
+Task Submission: You can submit Runnable or Callable tasks for execution. A Callable can return a result and can throw a checked exception.
+
+Lifecycle Management: The ExecutorService has methods to start, shut down, and await termination of the executor. This helps in managing the lifecycle of tasks and threads effectively.
+
+Future Support: When you submit a task, it returns a Future object that can be used to retrieve the result of the computation or to check if the task is complete.
+
+Convenient Factories: The Executors class provides factory methods for creating different types of ExecutorService instances, such as fixed thread pools, cached thread pools, and scheduled thread pools.
+
+methods - -
+
+submit(Runnable task): Submits a Runnable task for execution and returns a Future representing the task.
+submit(Callable<T> task): Submits a Callable task for execution and returns a Future representing the task's result.
+invokeAll(Collection<? extends Callable<T>> tasks): Executes a collection of tasks and returns a list of Future objects.
+shutdown(): Initiates an orderly shutdown of the executor, in which previously submitted tasks are executed, but no new tasks will be accepted.
+shutdownNow(): Attempts to stop all actively executing tasks and halts the processing of waiting tasks.
+
+
+import java.util.concurrent.*;
+
+public class ExecutorServiceExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        // Submit a Runnable task
+        executor.submit(() -> {
+            System.out.println("Task 1 is running");
+        });
+
+        // Submit a Callable task
+        Future<String> future = executor.submit(() -> {
+            Thread.sleep(1000);
+            return "Task 2 result";
+        });
+
+        try {
+            // Retrieve the result of the Callable
+            System.out.println(future.get());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        // Shut down the executor
+        executor.shutdown();
+    }
+}
+
+output -
+Task 1 is running
+Task 2 result
