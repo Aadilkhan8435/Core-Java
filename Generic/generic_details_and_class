@@ -53,3 +53,83 @@ Wildcard in Java Generics
 The ? (question mark) symbol represents the wildcard element. It means any type. If we write <? extends Number>, 
 it means any child class of Number, e.g., Integer, Float, and double. Now we can call the method of Number class through any child class object.
 
+wildcards in generics are used to represent unknown types.
+There are three main types of wildcards in Java generics:
+Unbounded Wildcard (?): Represents any type.
+Upper Bounded Wildcard (? extends T): Represents a type that is a subclass of T (including T itself).
+Lower Bounded Wildcard (? super T): Represents a type that is a superclass of T (including T itself).
+
+1. Unbounded Wildcard (?)
+The unbounded wildcard is used when you don't know or don't care about the specific type. It allows any type to be passed.
+
+public class WildcardExample {
+
+    // A method that accepts a list of any type
+    public static void printList(List<?> list) {
+        for (Object item : list) {
+            System.out.println(item);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<String> stringList = List.of("Apple", "Banana", "Cherry");
+        List<Integer> intList = List.of(1, 2, 3, 4);
+        
+        // Using unbounded wildcard
+        printList(stringList); // Can accept List<String>
+        printList(intList);    // Can accept List<Integer>
+    }
+}
+
+2.Upper Bounded Wildcard (? extends T)
+This is useful when you want to read from a collection but not add elements to it (since the actual type is unknown).
+
+public class WildcardExample {
+
+    // A method that accepts a list of objects that are subclasses of Number
+    public static void sumNumbers(List<? extends Number> list) {
+        double sum = 0;
+        for (Number num : list) {
+            sum += num.doubleValue();  // Calling doubleValue() method from Number class
+        }
+        System.out.println("Sum: " + sum);
+    }
+
+    public static void main(String[] args) {
+        List<Integer> intList = List.of(1, 2, 3);
+        List<Double> doubleList = List.of(1.1, 2.2, 3.3);
+        
+        // Using upper-bounded wildcard
+        sumNumbers(intList);   // Can accept List<Integer>
+        sumNumbers(doubleList); // Can accept List<Double>
+    }
+}
+
+3. Lower Bounded Wildcard (? super T)
+
+The lower-bounded wildcard is used when you want to restrict the unknown type to be a superclass of a specific type (including the type itself). 
+This is useful when you want to add elements to a collection but don't care about the specific type.
+
+public class WildcardExample {
+
+    // A method that adds an element to a list of superclasses of Integer
+    public static void addInteger(List<? super Integer> list) {
+        list.add(10); // We can safely add Integer since the list is of type Integer or a superclass
+    }
+
+    public static void main(String[] args) {
+        List<Number> numberList = new java.util.ArrayList<>();
+        List<Object> objectList = new java.util.ArrayList<>();
+        
+        // Using lower-bounded wildcard
+        addInteger(numberList);  // Can accept List<Number> or List<Object>
+        addInteger(objectList);  // Can accept List<Object>
+        
+        System.out.println(numberList);  // Output: [10]
+        System.out.println(objectList);  // Output: [10]
+    }
+}
+
+
+
+
