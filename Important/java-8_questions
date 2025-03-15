@@ -287,3 +287,81 @@ interface Greeting {
 
 Greeting greeting = () -> System.out.println("Hello World");
 greeting.sayHello();
+
+------------------------------------------------------------
+
+4. Enhancement of concurrent hashmap in jdk 8
+
+1. Support for Lambda Expressions and Functional Programming
+
+        ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+        
+        map.put("a", 1);
+        map.put("b", 2);
+        map.put("c", 3);
+
+        // Using forEach with lambda expression
+        map.forEach((key, value) -> {
+            System.out.println(key + ": " + value);
+        });
+
+2. computeIfAbsent() Method
+The computeIfAbsent() method was introduced to allow for atomic computation and insertion of a value only if the key is not already present in the map.
+
+How it works:
+If the key is present, the map simply returns the associated value.
+If the key is absent, it computes the value using the provided lambda expression and inserts it atomically.
+
+ ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+
+        // Only computes if the key is absent
+        map.computeIfAbsent("a", k -> 100);  // Key 'a' is absent, computes and inserts 100
+        map.computeIfAbsent("a", k -> 200);  // Key 'a' is present, does nothing
+
+        System.out.println(map);  // Output: {a=100}
+
+3. computeIfPresent() Method
+The computeIfPresent() method allows you to compute a new value for a given key only if it is already present in the map. If the key is absent, no computation is done.
+
+ ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+        
+        map.put("a", 10);
+        
+        // Only computes if the key is present
+        map.computeIfPresent("a", (key, value) -> value + 100);  // Value is 110
+        map.computeIfPresent("b", (key, value) -> value + 100);  // No change (key 'b' doesn't exist)
+
+        System.out.println(map);  // Output: {a=110}
+
+4. merge() Method
+The merge() method is introduced to atomically combine an existing value and a new value using a provided function. 
+If the key is absent, the new value is inserted. If the key is present, the function is used to combine the current value and the new value.
+
+ ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+        
+        map.put("a", 10);
+        
+        // Merge two values using a given function
+        map.merge("a", 5, (oldValue, newValue) -> oldValue + newValue);  // Result: 15
+        map.merge("b", 20, (oldValue, newValue) -> oldValue + newValue);  // Result: 20 (new key 'b')
+
+        System.out.println(map);  // Output: {a=15, b=20}
+
+5. replaceAll() Method
+The replaceAll() method was added to allow applying a function to all values in the map, updating them atomically.
+
+ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+        
+        map.put("a", 10);
+        map.put("b", 20);
+
+        // Using replaceAll to double all values
+        map.replaceAll((key, value) -> value * 2);
+
+        System.out.println(map);  // Output: {a=20, b=40}
+
+6. Improvements in Internal Locking Mechanism
+
+---------------------------------------------------------------------------
+
+
