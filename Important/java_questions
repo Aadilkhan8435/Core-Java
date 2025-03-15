@@ -1,1 +1,265 @@
-hi
+1 - java 8 optional 
+
+the Optional class was introduced as part of the java.util package to deal with the problem of null values. 
+It is a container object which may or may not contain a value. This helps to avoid NullPointerExceptions
+
+1. of(T value)
+This method returns an Optional with the specified non-null value. If the value is null, it throws a NullPointerException.
+
+2. ofNullable(T value)
+This method returns an Optional that may or may not contain a value. If the value is null, it returns an empty Optional instead of throwing an exception.
+
+3. orElse(T other)
+This method returns the value if present, otherwise returns the specified other value.
+
+4. orElseGet(Supplier<? extends T> other)
+This method returns the value if present, otherwise it returns the value from the Supplier.
+
+--------------------------------------------------------------------------------------------
+
+2 - Completable future
+
+A CompletableFuture is a class introduced in Java 8 as part of the java.util.concurrent package, 
+which represents a future result of an asynchronous computation. It provides a more flexible, 
+non-blocking way to work with asynchronous programming in Java. Unlike the traditional Future class, 
+CompletableFuture allows you to explicitly complete a computation and to chain multiple asynchronous tasks together in a declarative manner.
+
+##### Key Components of CompletableFuture:
+
+1. Asynchronous Execution
+CompletableFuture provides methods for running tasks asynchronously, which means the tasks execute in a separate thread.
+
+CompletableFuture<Void> future = CompletableFuture.runAsync(() -> { // write code here });
+future.join();
+
+2. Completion Methods
+You can manually complete a CompletableFuture by using the complete() method, which allows you to set the result of the future computation.
+
+3. Chaining Methods
+One of the powerful features of CompletableFuture is the ability to chain multiple asynchronous tasks together. 
+You can apply functions to the result of the previous computation using methods like thenApply(), thenAccept(), thenRun(), etc.
+
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            return 5; // Initial value
+        }).thenApply(result -> {
+            return result * 2; // Multiply by 2
+        }).thenApply(result -> {
+            return result + 3; // Add 3
+        });
+        
+        // Block and get the final result
+        System.out.println(future.join());
+
+4. Exception Handling
+Handling errors in asynchronous tasks is important. CompletableFuture provides methods such as exceptionally() and handle() to handle exceptions.
+
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            if (true) throw new RuntimeException("Something went wrong!");
+            return 5;
+        }).exceptionally(ex -> {
+            System.out.println("Error: " + ex.getMessage());
+            return 0;  // Provide a default value in case of error
+        });
+        
+        // Get result
+        System.out.println(future.join()); 
+
+5. Combining Multiple Futures
+CompletableFuture allows you to combine multiple futures using methods like thenCombine(), allOf(), and anyOf(). 
+These methods allow you to wait for multiple asynchronous tasks and combine their results.
+
+CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> 5);
+        CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> 10);
+        
+        CompletableFuture<Integer> combinedFuture = future1.thenCombine(future2, (result1, result2) -> {
+            return result1 + result2;  // Combine both results
+        });
+        
+        // Get result
+        System.out.println(combinedFuture.join());  // op - 15
+
+#### Methods of Completable future - 
+
+1. supplyAsync()
+This method is used to run an asynchronous task that supplies a result. It takes a Supplier (a function that provides a result) and returns a CompletableFuture.
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> 42);
+        System.out.println(future.join());  // Output: 42
+
+2. runAsync()
+This method runs an asynchronous task that does not return a result. It takes a Runnable and returns a CompletableFuture<Void>.
+
+CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            System.out.println("Task is running asynchronously");
+        });
+        
+        future.join();  // Block to wait for the task to complete
+
+3. thenApply()
+This method is used to apply a function to the result of the previous CompletableFuture. It returns a new CompletableFuture containing the transformed result.
+
+ CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> 5)
+                .thenApply(result -> result * 2);
+        System.out.println(future.join());  // Output: 10
+
+4. thenAccept()
+This method is similar to thenApply(), but it is used when you do not need to return a value after applying the function. It performs an action with the result.
+
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> 5)
+                .thenAccept(result -> System.out.println(result * 2));  // Output: 10
+        future.join();  // Wait for completion
+
+thenCompose()
+This method is used to chain another CompletableFuture that depends on the result of the previous computation. 
+It is like thenApply(), but the function passed returns another CompletableFuture.
+
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> 5)
+                .thenCompose(result -> CompletableFuture.supplyAsync(() -> result * 2));
+        
+        System.out.println(future.join());  // Output: 10
+
+5. thenRun()
+This method is used to execute a Runnable after the completion of the previous computation, but it does not use the result of the previous computation.
+ 
+CompletableFuture<Void> future = CompletableFuture.supplyAsync(() -> 5)
+                .thenRun(() -> System.out.println("Task completed"));
+        future.join();  // Output: Task completed
+
+6. exceptionally()
+This method allows you to handle exceptions that occur during the execution of a CompletableFuture. 
+It returns a new CompletableFuture with a fallback value in case of an exception.
+
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            throw new RuntimeException("Something went wrong!");
+        }).exceptionally(ex -> {
+            System.out.println("Error: " + ex.getMessage());
+            return 0;  // Fallback value
+        });
+        
+        System.out.println(future.join());  // Output: Error: Something went wrong! 0
+
+7. handle()
+This method is similar to exceptionally(), but it allows you to handle both the result and the exception.
+You can modify the result or return a default value in case of an exception.
+
+CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            throw new RuntimeException("Something went wrong!");
+        }).handle((result, ex) -> {
+            if (ex != null) {
+                System.out.println("Error: " + ex.getMessage());
+                return 0;  // Fallback value
+            }
+            return result;
+        });
+        
+        System.out.println(future.join());  // Output: Error: Something went wrong! 0
+
+8. thenCombine()
+This method is used to combine the results of two independent CompletableFuture objects. 
+It applies a function to the results of both futures and returns a new CompletableFuture.
+CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> 5);
+        CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> 10);
+        
+        CompletableFuture<Integer> combinedFuture = future1.thenCombine(future2, (result1, result2) -> result1 + result2);
+        
+        System.out.println(combinedFuture.join());  // Output: 15
+
+9. allOf()
+This method is used to wait for the completion of all the provided CompletableFuture instances. 
+It returns a new CompletableFuture<Void> that completes when all the futures complete.
+
+CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> 5);
+        CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> 10);
+        
+        CompletableFuture<Void> allOfFuture = CompletableFuture.allOf(future1, future2);
+        allOfFuture.join();  // Wait for both futures to complete
+        
+        System.out.println("All futures completed.");
+
+10. anyOf()
+This method is used to wait for the completion of any one of the provided CompletableFuture instances.
+It returns a new CompletableFuture that completes when the first future completes.
+
+CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> 5);
+        CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> 10);
+        
+        CompletableFuture<Object> anyOfFuture = CompletableFuture.anyOf(future1, future2);
+        System.out.println(anyOfFuture.join());  // Output: 5 (whichever completes first)
+
+11. complete(T value)
+This method is used to manually complete a CompletableFuture. It sets the value of the future to value if the computation is not already completed.
+
+CompletableFuture<String> future = new CompletableFuture<>();
+// Manually completing the future
+future.complete("Task Completed");
+System.out.println(future.join());  // Output: Task Completed
+
+######## D/B Future and Completable future
+
+Part of	
+java.util.concurrent.Future	
+java.util.concurrent.CompletableFuture (extends Future)
+
+API Limitations	
+Basic methods like get(), cancel(), and isDone().	
+Rich API with methods for chaining, combining, handling exceptions, etc.
+
+Asynchronous Execution	
+Doesn't provide a way to initiate async tasks directly; needs to be combined with ExecutorService or Thread	
+Provides methods like supplyAsync(), runAsync() to easily execute asynchronous tasks
+
+Chaining Tasks	
+Does not support chaining tasks directly. You can only get the result or cancel it.	
+Supports task chaining with methods like thenApply(), thenCompose(), thenCombine() for combining multiple asynchronous tasks
+
+Exception Handling	
+Basic exception handling using get() (throws ExecutionException).	
+More advanced exception handling with methods like exceptionally() and handle().
+
+Completion Handling	
+No way to act when the task is completed (apart from get() or isDone()).	
+Provides methods like whenComplete(), thenAccept(), and thenRun() to handle task completion (success or failure).
+
+Blocking vs Non-blocking	
+get() blocks until the result is available.	
+join() and get() block similarly, but CompletableFuture can be non-blocking and run asynchronously with proper chaining.
+
+Manual Completion	
+Cannot manually complete a task.	
+Allows manual completion with complete() and completeExceptionally().
+
+
+Basic usage
+
+Future - 
+
+ExecutorService executor = Executors.newFixedThreadPool(1);
+// Submit an asynchronous task
+Future<Integer> future = executor.submit(() -> {
+Thread.sleep(1000);
+return 42;  // The result of the computation
+});
+        
+// Blocking call to get the result
+System.out.println("Result: " + future.get());  // Output: Result: 42
+executor.shutdown();
+
+############ D/B Get and Join
+
+Exception Handling	
+Throws a checked exception (ExecutionException) if the computation fails or is interrupted.	
+Throws an unchecked exception (CompletionException) if the computation fails or is interrupted.
+
+Exception Type	
+Throws ExecutionException (which wraps the actual exception) and InterruptedException if the thread was interrupted.	
+Throws CompletionException (which wraps the actual exception) but does not throw InterruptedException directly.
+
+Handling InterruptedException	
+Throws InterruptedException if the current thread is interrupted while waiting.	
+Does not throw InterruptedException. It wraps it in a CompletionException instead.
+
+Use Case	
+get() is suitable when you want to handle exceptions explicitly using try-catch blocks.	
+join() is generally used when you want to avoid dealing with checked exceptions and prefer an unchecked exception.
+
+--------------------------------------------------------------------------------------------
+
