@@ -364,4 +364,44 @@ ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
 
 ---------------------------------------------------------------------------
 
+5. Stream API 
+
+In Java, the Stream API introduced in Java 8 is a powerful tool for working with sequences of data in a functional programming style. 
+The API provides methods for processing collections of data in a concise and declarative manner.
+
+Streams have two main types of operations:
+
+1. Intermediate Operations
+
+Lazy: Intermediate operations are not executed until a terminal operation is invoked.
+Return a new stream: Intermediate operations return a new stream, allowing for method chaining.
+
+Common Intermediate Operations:
+filter(): Filters elements based on a condition (predicate).
+map(): Transforms each element using a function.
+flatMap(): Flattens nested collections into a single stream.
+distinct(): Removes duplicate elements.
+sorted(): Sorts elements based on a comparator or natural ordering.
+peek(): Allows inspecting elements as they pass through the stream (useful for debugging).
+limit(): Limits the number of elements in the stream.
+skip(): Skips the first N elements of the stream.
+
+2. Terminal Operations
+
+Eager: Terminal operations trigger the processing of the stream.
+Consume the stream: Once a terminal operation is invoked, the stream is closed and can no longer be used.
+
+Common Terminal Operations:
+collect(): Collects elements into a collection (e.g., List, Set).
+forEach(): Iterates over each element and performs an action.
+reduce(): Performs a reduction on the elements (e.g., summing them).
+count(): Returns the number of elements in the stream.
+anyMatch(), allMatch(), noneMatch(): Check whether any, all, or no elements match a given predicate.
+findFirst(): Returns the first element in the stream, if present.
+findAny(): Returns any element from the stream (may be optimized for parallel streams).
+min(), max(): Find the minimum or maximum element based on a comparator.
+
+# Difference between map and flatmap
+
+
 
