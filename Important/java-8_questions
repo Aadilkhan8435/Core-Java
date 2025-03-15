@@ -263,3 +263,27 @@ join() is generally used when you want to avoid dealing with checked exceptions 
 
 --------------------------------------------------------------------------------------------
 
+3. Functional Interface
+
+A functional interface in Java is an interface that has exactly one abstract method. 
+It can have multiple default and static methods, but it must have only one abstract method.
+
+Java introduced functional interfaces in Java 8 to support functional programming features such as lambda expressions and streams.
+
+The @FunctionalInterface annotation is not required but is often used to indicate that an interface is intended to be a functional interface. 
+If an interface annotated with @FunctionalInterface does not meet the requirements of a functional interface (i.e., it has more than one abstract method), 
+the compiler will generate an error.
+
+Why Was It Introduced?
+Functional interfaces were introduced in Java 8 to enable functional programming features like lambda expressions and method references, 
+making it easier to pass behavior as parameters, improve code readability, and support a more declarative style of programming.
+
+Example: Printing "Hello World" Using a Functional Interface
+
+@FunctionalInterface
+interface Greeting {
+    void sayHello();
+}
+
+Greeting greeting = () -> System.out.println("Hello World");
+greeting.sayHello();
