@@ -15,6 +15,11 @@ This method returns the value if present, otherwise returns the specified other 
 4. orElseGet(Supplier<? extends T> other)
 This method returns the value if present, otherwise it returns the value from the Supplier.
 
+        Optional<String> name = Optional.ofNullable("John");
+        
+        // Check if value is present
+        name.ifPresent(value -> System.out.println("Name is: " + value));
+
 --------------------------------------------------------------------------------------------
 
 2 - Completable future
@@ -403,5 +408,33 @@ min(), max(): Find the minimum or maximum element based on a comparator.
 
 # Difference between map and flatmap
 
+map():
 
+Transforms each element of the stream into another object.
+The result is a Stream of transformed values, but each element in the stream is wrapped in another container (like Optional or List).
+It does not flatten nested structures.
+
+            List<String> sentences = Arrays.asList("Hello world", "Java stream", "flatMap example");
+        
+        // Using map to convert each sentence into a list of words (List of Lists)
+        List<List<String>> result = sentences.stream()
+            .map(sentence -> Arrays.asList(sentence.split(" ")))  // Split each sentence into words
+            .collect(Collectors.toList());  // Collect as a List of Lists
+        
+        System.out.println(result);  // Output: [[Hello, world], [Java, stream], [flatMap, example]]
+
+flatMap():
+
+Similar to map(), but it flattens the result.
+It transforms each element into a stream of objects (or other collections) and flattens them into a single stream.
+The result is a flat stream of elements instead of a stream of collections.
+
+ List<String> sentences = Arrays.asList("Hello world", "Java stream", "flatMap example");
+        
+        // Using flatMap to convert each sentence into a stream of words and flatten them
+        List<String> result = sentences.stream()
+            .flatMap(sentence -> Arrays.stream(sentence.split(" ")))  // Split each sentence and flatten into a stream of words
+            .collect(Collectors.toList());  // Collect as a single List of words
+        
+        System.out.println(result);  // Output: [Hello, world, Java, stream, flatMap, example]
 
