@@ -438,3 +438,34 @@ The result is a flat stream of elements instead of a stream of collections.
         
         System.out.println(result);  // Output: [Hello, world, Java, stream, flatMap, example]
 
+--------------------------------------------------------------------------------------------------------------
+
+Date and Time api
+
+Before Java 8, the date and time API in Java was primarily handled by the java.util.Date and java.util.Calendar classes. 
+While these classes were functional, they had several limitations and issues that made them difficult to work with. 
+Java 8 introduced the new Date and Time API in the java.time package to address these problems.
+
+Before Java 8, working with date and time was difficult due to mutable, thread-unsafe, and inconsistent APIs. 
+The introduction of the java.time API in Java 8 resolved these issues by providing:
+
+Immutable and thread-safe classes.
+Clear and intuitive methods for date-time manipulation.
+Better support for time zones, durations, and periods.
+Separation of concerns for date, time, and durations.
+This made date and time manipulation in Java much more powerful and easier to work with.
+
+
+LocalDate date = LocalDate.now();  // Gets the current date
+LocalDate newDate = date.plusDays(5);  // Adds 5 days
+
+LocalTime time = LocalTime.now();  // Gets the current time
+LocalTime newTime = time.plusHours(2);  // Adds 2 hours
+
+LocalDateTime dateTime = LocalDateTime.now();  // Current date and time
+LocalDateTime newDateTime = dateTime.minusWeeks(1);  // Subtracts a week
+
+ZonedDateTime zonedDateTime = ZonedDateTime.now();  // Current date and time with time zone
+ZonedDateTime newZonedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));  // Convert to UTC
+
+-----------------------------------------------------------------------------------------------------------
